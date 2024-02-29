@@ -1,0 +1,5 @@
+DB_NAME='django_ecommerce_11'
+DB_USER='ahmadkybora'
+DB_PASS='09392141724abc'
+DB_HOST='localhost'
+DB_PORT='3306'
