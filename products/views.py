@@ -1,4 +1,6 @@
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, authentication_classes, permission_classes
+from rest_framework.authentication import SessionAuthentication, TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
 
@@ -18,4 +20,4 @@ def productById(request, pk):
     except Product.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
     serializer = ProductSerializer(product, context={ "request": request })
-    return Response(serializer, status=status.HTTP_200_OK)
+    return Response(serializer.data, status=status.HTTP_200_OK)
