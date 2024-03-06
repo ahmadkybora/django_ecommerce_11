@@ -19,7 +19,7 @@ def register(request):
         user.set_password(request.data['password'])
         user.save()
         return Response({ 'user': serializer.data })
-    return Response(serializer.error, status=status.HTTP_200_OK)
+    return Response(serializer.errors, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
 @api_view(['POST'])
 def login(request):

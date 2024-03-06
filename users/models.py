@@ -5,7 +5,8 @@ from django.db import models
 from django.core import validators
 from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
-
+from rest_framework import serializers
+# from utils.validators import validate_phone_number, validate_username
 
 class UserManager(BaseUserManager):
     user_in_migration = True
@@ -47,27 +48,31 @@ class UserManager(BaseUserManager):
     def get_by_phone_number(self, phone_number):
         return self.get(**{ 'phone_number': phone_number })
     
+# def validate_username(value):
+#     if (value.lower() != 2):
+#         raise serializers.ValidationError("Invalid name and age combination.")
+#     if (value != "s"):
+#         raise serializers.ValidationError("Invalid name and age combination.")
+#     return value
+    
 class User(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(_('username'), max_length=32, unique=True,
-                                help_text=_(
-                                    'Required. 30 ch'
-                                ),
-                                validators=[
-                                    validators.RegexValidator(r'^[a-zA_Z][a-zA-Z0-9_\.]+$',
-                                                              _('ss'), 'invalid')
-                                ],
-                                error_messages={
-                                    "unique": _("s")                                    
-                                }
+                                # help_text=_(
+                                #     'Required. 30 ch'
+                                # ),
+                                # validators=[
+                                #     validate_username
+                                # ],
+                                # error_messages={
+                                #     "unique": _("s")                              
+                                # }
                                 )
     first_name = models.CharField(_('first name'), max_length=30, blank=True)
     last_name = models.CharField(_('last name'), max_length=30, blank=True)
     email = models.EmailField(_('email address'), unique=True, null=True, blank=True)
     phone_number = models.BigIntegerField(_('mobile number'), unique=True, null=True, blank=True,
-                                          validators=[
-                                              validators.RegexValidator(r'^989[0-3,9]\d{8}$', 
-                                                                        ('Enter number'), 'invalid')
-                                          ],
+                                        #   validators=[
+                                        #       validate_phone_number],
                                           error_messages={
                                               'unique': _('A user')
                                           })
